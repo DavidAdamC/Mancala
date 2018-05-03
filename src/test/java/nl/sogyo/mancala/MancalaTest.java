@@ -10,4 +10,259 @@ public class MancalaTest {
     {
         Assert.assertTrue(true);
     }
+
+    @Test
+    public void TestBuurman() {
+        Bowl myBowl = new Bowl();
+        myBowl.makeNeighbour(myBowl);
+        //myBowl.getNeighbour() == myBowl.getNeighbour();
+
+        Assert.assertTrue(myBowl.getNeighbour().getDist() == myBowl.getDist()+1);
+    }
+
+    @Test
+    public void TestOpposite() {
+        Bowl myBowl = new Bowl();
+        myBowl.Initialize();
+        myBowl.makeField();
+        for(int i = 0; i < 3; i++) {
+            myBowl = (Bowl) myBowl.getNeighbour();
+        }
+
+        Assert.assertTrue(myBowl.getDist() + myBowl.getOpposite().getDist() == 12);
+    }
+
+    @Test
+    public void TestQStones() {
+        Bowl myBowl = new Bowl();
+        myBowl.setqStones(4);
+
+        Assert.assertTrue(myBowl.getqStones() == 4);
+    }
+
+    @Test
+    public void TestPlayerOwner() {
+        Bowl myBowl = new Bowl();
+        myBowl.Initialize();
+        Player player1 = new Player();
+        player1.setName("Fred");
+        myBowl.setOwner(player1);
+
+        Assert.assertTrue(myBowl.getOwner().getName().equals("Fred"));
+    }
+
+    @Test
+    public void TestMakeField() {
+        Bowl myBowl = new Bowl();
+        myBowl.makeField();
+        Field me = myBowl;
+        for(int i = 0; i < 14; i++) {
+            me = me.getNeighbour();
+
+        }
+        me = (Bowl) me;
+        Assert.assertTrue(myBowl == me);
+
+    }
+
+    @Test
+    public void TestGetMyKalaha() {
+        Bowl myBowl = new Bowl();
+        myBowl.makeField();
+        Kalaha myKalaha = myBowl.getMyKalaha();
+        Assert.assertTrue(myBowl.getOwner() == myKalaha.getOwner());
+    }
+
+    @Test
+    public void ChosenBowlClearsItself() {
+        Bowl myBowl = new Bowl();
+        myBowl.makeField();
+        myBowl.choose(0);
+        Assert.assertEquals(0, myBowl.getqStones());
+    }
+
+    @Test
+    public void ChosenBowlGivesToNeighbour() {
+        Bowl myBowl = new Bowl();
+        myBowl.makeField();
+        System.out.println("From Test: ChosenBowlGivesToNeighbour: " + myBowl.getqStones());
+        myBowl.choose(0);
+        Assert.assertEquals(5, myBowl.getNeighbour().getqStones());
+    }
+    @Test
+    public void ChosenBowlGivesToOwnKalaha() {
+        Bowl myBowl = new Bowl();
+        myBowl.makeField();
+        for(int i = 0; i < 2; i++) {
+            myBowl = (Bowl) myBowl.getNeighbour();
+        }
+        myBowl.choose(0);
+        System.out.println("From Test: ChosenBowlGivesToOwnKalaha: " + myBowl.getDist());
+        Assert.assertEquals(1, myBowl.getMyKalaha().getqStones());
+    }
+
+    @Test
+    public void BowlAfterKalahaDoesntGetStoneWhenNotNeededTo() {
+            Bowl myBowl = new Bowl();
+            myBowl.makeField();
+            myBowl.choose(0);
+        System.out.println("From Test: BowlAfterKalahaDoesntGetStoneWhenNotNeeded: " + myBowl.getDist());
+            Assert.assertEquals(4, myBowl.getMyKalaha().getNeighbour().getqStones());
+    }
+
+
+    @Test
+    public void TestPassStonesEndInOwnNonEmptyBowl() {
+        Bowl myBowl = new Bowl();
+        myBowl.makeField();
+        Bowl myEnd = myBowl;
+        for(int i = 0; i < myBowl.getqStones(); i++) {
+            myEnd = (Bowl) myEnd.getNeighbour();
+        }
+        myBowl.choose(0);
+        Assert.assertEquals(5, myEnd.getqStones());
+    }
+
+    @Test
+    public void TestTurnHoldsWhenEndingInOwnKalaha() {
+        Bowl myBowl = new Bowl();
+        myBowl.makeField();
+        for(int i = 0; i < 2; i++) {
+            myBowl = (Bowl) myBowl.getNeighbour();
+        }
+        myBowl.choose(0);
+        Assert.assertTrue(myBowl.getOwner().hasTurn());
+
+    }
+
+    @Test
+    public void TestOpponentGetsTurn() {
+        Bowl myBowl = new Bowl();
+        Field myOppBowl = myBowl;
+
+        myBowl.makeField();
+        for(int i = 0; i < 7; i++) {
+            myOppBowl = myOppBowl.getNeighbour();
+        }
+        myOppBowl = (Bowl) myOppBowl;
+
+        myBowl.getOwner().setOpponent(myOppBowl.getOwner());
+        myOppBowl.getOwner().setOpponent(myBowl.getOwner());
+        Assert.assertTrue(myBowl.getOwner().getOpponent().getName().equals("Barney"));
+        myBowl.getOwner().giveTurn();
+        Assert.assertTrue(myBowl.getOwner().getOpponent().hasTurn());
+    }
+
+    @Test
+    public void TestOpponentKalahaDoesntTakeStonesOnMyTurn() {
+        Bowl myBowl = new Bowl();
+        myBowl.makeField();
+        myBowl.setqStones(15);
+        myBowl.choose(0);
+        Field myOppBowl = (Bowl) myBowl.getMyKalaha().getNeighbour();
+        System.out.println(((Bowl) myBowl.getMyKalaha().getNeighbour()).getMyKalaha().getOwner().getName());
+        Assert.assertEquals(0, ((Bowl) myOppBowl).getMyKalaha().getqStones());
+        System.out.println(myBowl.getDist() + " " + myBowl.getqStones());
+        myBowl.printBowlgetqStones();
+    }
+
+    @Test
+    public void TestRejectsChosenKalaha() {
+        Bowl myBowl = new Bowl();
+        myBowl.makeField();
+        myBowl.choose(6);
+    }
+
+    @Test
+    public void TestEenAantalZetten() {
+        int[] myIntScores = new int[]{0,5,5,5,0,5,8,0,0,5,5,5,5,0};
+        Bowl myBowl = new Bowl();
+        myBowl.makeField();
+        myBowl.choose(4);
+        myBowl.printBowlgetqStones();
+        myBowl.choose(7);
+        myBowl.printBowlgetqStones();
+        myBowl.choose(0);
+        myBowl.printBowlgetqStones();
+        Field myRunner = myBowl;
+        for(int i = 0; i < 14; i++) {
+            System.out.println(myRunner.getDist() + " " + myRunner.getOwner().getName() + " " + myRunner.getqStones());
+            Assert.assertEquals(myIntScores[i], myRunner.getqStones());
+            myRunner = myRunner.getNeighbour();
+        }
+    }
+
+    @Test
+    public void TestGameHasEnded() {
+        int[] myIntScores = new int[]{0,0,0,0,0,0,24,0,0,0,0,0,0,24};
+        int[] myMoves = new int[]{2,4,8,7,0,11,2,10,2,12,4,11,2,9,0,11,1,9,3,11,10,4,2,8,1,7,4,8,3,9,11,10,0,12,3};
+        Bowl myBowl = new Bowl();
+        myBowl.makeField();
+        myBowl.playMoves(myMoves);
+        myBowl.printBowlgetqStones();
+        Assert.assertTrue(myBowl.gameHasEnded());
+    }
+
+    @Test
+    public void TestAfterGameEndedStonesAreStolen() {
+        int[] myIntScores = new int[]{0,0,0,0,0,0,24,0,0,0,0,0,0,24};
+        int[] myMoves = new int[]{2,4,8,7,0,11,2,10,2,12,4,11,2,9,0,11,1,9,3,11,10,4,2,8,1,7,4,8,3,9,11,10,0,12,3};
+        Bowl myBowl = new Bowl();
+        myBowl.makeField();
+        myBowl.playMoves(myMoves);
+        myBowl.printBowlgetqStones();
+
+        if(!myBowl.getOwner().hasTurn()) {
+            myBowl = (Bowl)myBowl.getMyKalaha().getNeighbour();
+        }
+        Field myRunner = myBowl;
+        for(int i = 0; i < 14; i++) {
+            Assert.assertEquals(myIntScores[i], myRunner.getqStones());
+            myRunner = myRunner.getNeighbour();
+        }
+    }
+
+
+    @Test
+    public void TestEenPartij() {
+        System.out.println("---------------------------------------------");
+        int[] myIntScores = new int[]{0,0,0,0,0,0,24,0,0,0,0,0,0,24};
+        int[] myMoves = new int[]{2,4,8,7,0,11,2,10,2,12,4,11,2,9,0,11,1,9,3,11,10,4,2,8,1,7,4,8,3,9,11,10,0,12,3};
+        Bowl myBowl = new Bowl();
+        myBowl.makeField();
+        myBowl.playMoves(myMoves);
+        myBowl.printBowlgetqStones();
+        Field myRunner = myBowl;
+        for(int i = 0; i < 14; i++) {
+            Assert.assertEquals(myIntScores[i], myRunner.getqStones());
+            myRunner = myRunner.getNeighbour();
+        }
+    }
+
+    @Test
+    public void TestDeclareWinner() {
+        int[] myIntScores = new int[]{0,0,0,0,0,0,24,0,0,0,0,0,0,24};
+        int[] myMoves = new int[]{2,4,8,7,0,11,2,10,2,12,4,11,2,9,0,11,1,9,3,11,10,4,2,8,1,7,4,8,3,9,11,10,0,12,3};
+        Bowl myBowl = new Bowl();
+        myBowl.makeField();
+        myBowl.playMoves(myMoves);
+        Assert.assertEquals(1, myBowl.getOwner().getResult());
+    }
+
+    @Test
+    public void TestEenAnderePartij() {
+        int[] myIntScores = new int[]{0,0,0,0,0,0,33,0,0,0,0,0,0,15};
+        int[] myMoves = new int[]{2,5,7,1,8,0,9,1,12,5,2,7,1,11,5,4,12};
+        Bowl myBowl = new Bowl();
+        myBowl.makeField();
+        myBowl.playMoves(myMoves);
+        myBowl.printBowlgetqStones();
+        Field myRunner = myBowl;
+        for(int i = 0; i < 14; i++) {
+            Assert.assertEquals(myIntScores[i], myRunner.getqStones());
+            myRunner = myRunner.getNeighbour();
+        }
+    }
+
+
 }
