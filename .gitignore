@@ -2,6 +2,7 @@
 *.iml
 .idea/
 /out/
+**/target/**
 
 ### Eclipse
 .metadata
@@ -26,3 +27,4 @@ local.properties
 *.jar
 *.war
 *.ear
+

@@ -18,13 +18,11 @@ public class Kalaha extends Field{
 
     @Override
     public void passStones(int qstones) {
-        System.out.println("From Kalaha: passStones: " + getOwner().getName() + " heeft " + getOwner().hasTurn() + " de beurt." + qstones);
-        if(getOwner().hasTurn() == true) {
+        //System.out.println("From Kalaha: passStones: " + getOwner().getName() + " heeft " + getOwner().hasTurn() + " de beurt." + qstones);
+        if(this.getOwner().hasTurn() == true) {
             addstone();
             if (qstones > 1) {
                 this.getNeighbour().passStones(qstones - 1);
-            } else {
-
             }
         } else {
             this.getNeighbour().passStones(qstones);

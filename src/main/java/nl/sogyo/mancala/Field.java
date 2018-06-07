@@ -20,11 +20,7 @@ public abstract class Field {
     }
 
     void Initialize() {
-        //player1 = new Player();
-        //player2 = new Player();
         startBowl = new Bowl();
-        //player1.setName("Fred");
-        //player2.setName("Barney");
         dist = 0;
 
     }
@@ -60,45 +56,35 @@ public abstract class Field {
         setqStones(qStones + 1);
     }
 
-    public void passStones(int qstones) {
-
-    }
-
-
+    public void passStones(int qstones) { }
 
     public void makeNeighbour(Bowl root) {
 
         Field res;
+        Player eigenaar;
+        if(this.getDist() == 6) {
+            eigenaar = makePlayer();
+        } else {
+            eigenaar = this.getOwner();
+        }
         if(this.getDist() % 7 == 5) {
             res = new Kalaha();
-            res.setDist(this.getDist() + 1);
-            res.setOwner(this.getOwner());
-            res.Initialize();
-            this.setNeighbour(res);
-
-            if(this.getDist() == 6) {
-            //    makeNeighbour(root);
-            }
-
         } else {
-
             res = new Bowl();
-            res.setDist(this.getDist() + 1);
-            if(res.getDist() == 7) {
-                Player player2 = new Player();
-                player2.setName("Barney");
-                player2.setResult(-1);
-                player2.setOpponent(this.getOwner());
-                res.setOwner(player2);
-            } else {
-                res.setOwner(this.getOwner());
-            }
-            res.Initialize();
             ((Bowl) res).InitializeBowl();
-            this.setNeighbour(res);
-            //makeNeighbour(root);
-            //res.makeBowl();
         }
+        res.Initialize();
+        res.setDist(this.getDist() + 1);
+        res.setOwner(eigenaar);
+        this.setNeighbour(res);
+    }
+
+    Player makePlayer() {
+        Player player2 = new Player("Barney", false);
+        player2.setName("Barney");
+        player2.setResult(-1);
+        player2.setOpponent(this.getOwner());
+        return(player2);
     }
 
 

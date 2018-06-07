@@ -31,4 +31,4 @@ Binnen GIT kun je die bestanden dan in .gitignore zetten. Alle bestanden of Regu
 Markdown
 --------
 
-Dit bestand is geschreven in [Markdown](http://daringfireball.net/projects/markdown/), een simpele tekst-naar-HTML conversietool. Dit bestand wordt door GitLab geïnterpreteerd en als beschrijving bij het project getoond.
+Dit bestand is geschreven in [Markdown](http://daringfireball.net/projects/markdown/), een simpele tekst-naar-HTML conversietool. Dit bestand wordt door GitLab geïnterpreteerd en als beschrijving bij het project getoond."# Mancala" 

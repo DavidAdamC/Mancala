@@ -6,6 +6,11 @@ public class Player {
     private Player Opponent;
     private int result; // -1; spel niet klaar. 0 <= result <= 2: spel klaar. result = 0, 1, 2: resp. verloren, gelijk, gewonnen.
 
+    public Player(String givenName, boolean givenMyTurn) {
+        myTurn = givenMyTurn;
+        name = givenName;
+        result = -1;
+    }
 
     public String getName() {
         return name;
@@ -46,13 +51,9 @@ public class Player {
 
 
     public void swapTurn() {
-        System.out.println("From Player: swapTurn: Swapping turns...");
+
         myTurn = !myTurn;
         getOpponent().myTurn = !getOpponent().myTurn;
-        if(this.hasTurn()) {
-            System.out.println("From Player: swapTurn: Swapping turns... " + this.getName() + " has Turn.");
-        } else {
-            System.out.println("From Player: swapTurn: Swapping turns... " + this.getOpponent().getName() + " has Turn.");
-        }
+
     }
 }

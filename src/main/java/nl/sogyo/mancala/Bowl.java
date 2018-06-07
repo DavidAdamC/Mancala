@@ -20,24 +20,25 @@ public class Bowl extends Field {
         setqStones(getqStones() + 1);
     }
 
+    public Bowl() {
+        setqStones(4);
+    }
+
+    public Bowl (boolean mustMakeField) {
+        setqStones(4);
+        if(mustMakeField) {
+            makeField();
+        }
+    }
+
     void InitializeBowl() {
         setqStones(4);
     }
-/*
-    void Initialize() {
-        player1 = new Player();
-        player2 = new Player();
-        startBowl = new Bowl();
-        player1.setName("Fred");
-        player2.setName("Barney");
-        dist = 0;
-        setOwner();
-        setqStones(4);
-    }
-*/
+
+
     public void makeField() {
         Field myField = this;
-        Player player1 = new Player();
+        Player player1 = new Player("Fred", true);
         player1.takeTurn();
         player1.setName("Fred");
         player1.setResult(-1);
@@ -47,7 +48,7 @@ public class Bowl extends Field {
         for(int i = 1; i <= 13; i++) {
             myField.makeNeighbour(root);
             myField = myField.getNeighbour();
-            System.out.println("From Bowl: MakeField: " + myField.getDist() + "  " + myField.getqStones() + " " + myField.getOwner().getName());
+            //System.out.println("From Bowl: MakeField: " + myField.getDist() + "  " + myField.getqStones() + " " + myField.getOwner().getName());
         }
         myField.setNeighbour(root);
         player1.setOpponent(myField.getOwner());
@@ -94,7 +95,7 @@ public class Bowl extends Field {
     }
 
     public void passStones(int qpassStones) {
-        System.out.println("Stones to pass: " + qpassStones);
+        //System.out.println("Stones to pass: " + qpassStones);
         if(qpassStones == 1) {
             this.addstone();
 
@@ -111,7 +112,7 @@ public class Bowl extends Field {
         } else if(qpassStones > 0) {
             this.addstone();
             this.getNeighbour().passStones(qpassStones - 1);
-            System.out.println("From Bowl: passStones: " + getDist() + " " + getqStones());
+            //System.out.println("From Bowl: passStones: " + getDist() + " " + getqStones());
         }
     }
 

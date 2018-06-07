@@ -11,8 +11,8 @@ public class Mancala
     }
 
     void Initialize() {
-        Player player1 = new Player();
-        Player player2 = new Player();
+        //Player player1 = new Player();
+        //Player player2 = new Player();
 
         Bowl startBowl = new Bowl();
     }

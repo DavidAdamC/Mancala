@@ -12,19 +12,18 @@ public class MancalaTest {
     }
 
     @Test
-    public void TestBuurman() {
+    public void TestFindsBuurman() {
         Bowl myBowl = new Bowl();
         myBowl.makeNeighbour(myBowl);
-        //myBowl.getNeighbour() == myBowl.getNeighbour();
 
         Assert.assertTrue(myBowl.getNeighbour().getDist() == myBowl.getDist()+1);
     }
 
     @Test
-    public void TestOpposite() {
-        Bowl myBowl = new Bowl();
-        myBowl.Initialize();
-        myBowl.makeField();
+    public void TestFindsOpposite() {
+        Bowl myBowl = new Bowl(true);
+
+        //myBowl.makeField();
         for(int i = 0; i < 3; i++) {
             myBowl = (Bowl) myBowl.getNeighbour();
         }
@@ -34,7 +33,7 @@ public class MancalaTest {
 
     @Test
     public void TestQStones() {
-        Bowl myBowl = new Bowl();
+        Bowl myBowl = new nl.sogyo.mancala.Bowl();
         myBowl.setqStones(4);
 
         Assert.assertTrue(myBowl.getqStones() == 4);
@@ -42,10 +41,10 @@ public class MancalaTest {
 
     @Test
     public void TestPlayerOwner() {
-        Bowl myBowl = new Bowl();
-        myBowl.Initialize();
-        Player player1 = new Player();
-        player1.setName("Fred");
+        Bowl myBowl = new Bowl(true);
+        //myBowl.Initialize();
+        Player player1 = new Player("Fred", false);
+        //player1.setName("Fred");
         myBowl.setOwner(player1);
 
         Assert.assertTrue(myBowl.getOwner().getName().equals("Fred"));
@@ -53,46 +52,40 @@ public class MancalaTest {
 
     @Test
     public void TestMakeField() {
-        Bowl myBowl = new Bowl();
-        myBowl.makeField();
+        Bowl myBowl = new Bowl(true);
+
         Field me = myBowl;
         for(int i = 0; i < 14; i++) {
             me = me.getNeighbour();
-
         }
-        me = (Bowl) me;
         Assert.assertTrue(myBowl == me);
 
     }
 
     @Test
     public void TestGetMyKalaha() {
-        Bowl myBowl = new Bowl();
-        myBowl.makeField();
+        Bowl myBowl = new Bowl(true);
         Kalaha myKalaha = myBowl.getMyKalaha();
         Assert.assertTrue(myBowl.getOwner() == myKalaha.getOwner());
     }
 
     @Test
     public void ChosenBowlClearsItself() {
-        Bowl myBowl = new Bowl();
-        myBowl.makeField();
+        Bowl myBowl = new Bowl(true);
         myBowl.choose(0);
         Assert.assertEquals(0, myBowl.getqStones());
     }
 
     @Test
     public void ChosenBowlGivesToNeighbour() {
-        Bowl myBowl = new Bowl();
-        myBowl.makeField();
+        Bowl myBowl = new Bowl(true);
         System.out.println("From Test: ChosenBowlGivesToNeighbour: " + myBowl.getqStones());
         myBowl.choose(0);
         Assert.assertEquals(5, myBowl.getNeighbour().getqStones());
     }
     @Test
     public void ChosenBowlGivesToOwnKalaha() {
-        Bowl myBowl = new Bowl();
-        myBowl.makeField();
+        Bowl myBowl = new Bowl(true);
         for(int i = 0; i < 2; i++) {
             myBowl = (Bowl) myBowl.getNeighbour();
         }
@@ -103,8 +96,7 @@ public class MancalaTest {
 
     @Test
     public void BowlAfterKalahaDoesntGetStoneWhenNotNeededTo() {
-            Bowl myBowl = new Bowl();
-            myBowl.makeField();
+            Bowl myBowl = new Bowl(true);
             myBowl.choose(0);
         System.out.println("From Test: BowlAfterKalahaDoesntGetStoneWhenNotNeeded: " + myBowl.getDist());
             Assert.assertEquals(4, myBowl.getMyKalaha().getNeighbour().getqStones());
@@ -113,8 +105,7 @@ public class MancalaTest {
 
     @Test
     public void TestPassStonesEndInOwnNonEmptyBowl() {
-        Bowl myBowl = new Bowl();
-        myBowl.makeField();
+        Bowl myBowl = new Bowl(true);
         Bowl myEnd = myBowl;
         for(int i = 0; i < myBowl.getqStones(); i++) {
             myEnd = (Bowl) myEnd.getNeighbour();
@@ -125,8 +116,7 @@ public class MancalaTest {
 
     @Test
     public void TestTurnHoldsWhenEndingInOwnKalaha() {
-        Bowl myBowl = new Bowl();
-        myBowl.makeField();
+        Bowl myBowl = new Bowl(true);
         for(int i = 0; i < 2; i++) {
             myBowl = (Bowl) myBowl.getNeighbour();
         }
@@ -137,14 +127,13 @@ public class MancalaTest {
 
     @Test
     public void TestOpponentGetsTurn() {
-        Bowl myBowl = new Bowl();
+        Bowl myBowl = new Bowl(true);
         Field myOppBowl = myBowl;
 
         myBowl.makeField();
         for(int i = 0; i < 7; i++) {
             myOppBowl = myOppBowl.getNeighbour();
         }
-        myOppBowl = (Bowl) myOppBowl;
 
         myBowl.getOwner().setOpponent(myOppBowl.getOwner());
         myOppBowl.getOwner().setOpponent(myBowl.getOwner());
@@ -155,8 +144,7 @@ public class MancalaTest {
 
     @Test
     public void TestOpponentKalahaDoesntTakeStonesOnMyTurn() {
-        Bowl myBowl = new Bowl();
-        myBowl.makeField();
+        Bowl myBowl = new Bowl(true);
         myBowl.setqStones(15);
         myBowl.choose(0);
         Field myOppBowl = (Bowl) myBowl.getMyKalaha().getNeighbour();
@@ -168,16 +156,16 @@ public class MancalaTest {
 
     @Test
     public void TestRejectsChosenKalaha() {
-        Bowl myBowl = new Bowl();
-        myBowl.makeField();
+        Bowl myBowl = new Bowl(true);
+        //myBowl.makeField();
         myBowl.choose(6);
     }
 
     @Test
     public void TestEenAantalZetten() {
         int[] myIntScores = new int[]{0,5,5,5,0,5,8,0,0,5,5,5,5,0};
-        Bowl myBowl = new Bowl();
-        myBowl.makeField();
+        Bowl myBowl = new Bowl(true);
+        //myBowl.makeField();
         myBowl.choose(4);
         myBowl.printBowlgetqStones();
         myBowl.choose(7);
@@ -196,8 +184,8 @@ public class MancalaTest {
     public void TestGameHasEnded() {
         int[] myIntScores = new int[]{0,0,0,0,0,0,24,0,0,0,0,0,0,24};
         int[] myMoves = new int[]{2,4,8,7,0,11,2,10,2,12,4,11,2,9,0,11,1,9,3,11,10,4,2,8,1,7,4,8,3,9,11,10,0,12,3};
-        Bowl myBowl = new Bowl();
-        myBowl.makeField();
+        Bowl myBowl = new Bowl(true);
+        //myBowl.makeField();
         myBowl.playMoves(myMoves);
         myBowl.printBowlgetqStones();
         Assert.assertTrue(myBowl.gameHasEnded());
@@ -207,8 +195,7 @@ public class MancalaTest {
     public void TestAfterGameEndedStonesAreStolen() {
         int[] myIntScores = new int[]{0,0,0,0,0,0,24,0,0,0,0,0,0,24};
         int[] myMoves = new int[]{2,4,8,7,0,11,2,10,2,12,4,11,2,9,0,11,1,9,3,11,10,4,2,8,1,7,4,8,3,9,11,10,0,12,3};
-        Bowl myBowl = new Bowl();
-        myBowl.makeField();
+        Bowl myBowl = new Bowl(true);
         myBowl.playMoves(myMoves);
         myBowl.printBowlgetqStones();
 
@@ -228,8 +215,7 @@ public class MancalaTest {
         System.out.println("---------------------------------------------");
         int[] myIntScores = new int[]{0,0,0,0,0,0,24,0,0,0,0,0,0,24};
         int[] myMoves = new int[]{2,4,8,7,0,11,2,10,2,12,4,11,2,9,0,11,1,9,3,11,10,4,2,8,1,7,4,8,3,9,11,10,0,12,3};
-        Bowl myBowl = new Bowl();
-        myBowl.makeField();
+        Bowl myBowl = new Bowl(true);
         myBowl.playMoves(myMoves);
         myBowl.printBowlgetqStones();
         Field myRunner = myBowl;
@@ -243,8 +229,7 @@ public class MancalaTest {
     public void TestDeclareWinner() {
         int[] myIntScores = new int[]{0,0,0,0,0,0,24,0,0,0,0,0,0,24};
         int[] myMoves = new int[]{2,4,8,7,0,11,2,10,2,12,4,11,2,9,0,11,1,9,3,11,10,4,2,8,1,7,4,8,3,9,11,10,0,12,3};
-        Bowl myBowl = new Bowl();
-        myBowl.makeField();
+        Bowl myBowl = new Bowl(true);
         myBowl.playMoves(myMoves);
         Assert.assertEquals(1, myBowl.getOwner().getResult());
     }
@@ -253,8 +238,7 @@ public class MancalaTest {
     public void TestEenAnderePartij() {
         int[] myIntScores = new int[]{0,0,0,0,0,0,33,0,0,0,0,0,0,15};
         int[] myMoves = new int[]{2,5,7,1,8,0,9,1,12,5,2,7,1,11,5,4,12};
-        Bowl myBowl = new Bowl();
-        myBowl.makeField();
+        Bowl myBowl = new Bowl(true);
         myBowl.playMoves(myMoves);
         myBowl.printBowlgetqStones();
         Field myRunner = myBowl;
