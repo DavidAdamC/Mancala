@@ -11,9 +11,6 @@ public class Mancala
     }
 
     void Initialize() {
-        //Player player1 = new Player();
-        //Player player2 = new Player();
-
         Bowl startBowl = new Bowl();
     }
     public int getqStones() {
@@ -27,7 +24,4 @@ public class Mancala
     public void addstone() {
         setqStones(qStones + 1);
     }
-
-
-
 }

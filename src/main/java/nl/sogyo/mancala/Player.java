@@ -51,9 +51,7 @@ public class Player {
 
 
     public void swapTurn() {
-
         myTurn = !myTurn;
         getOpponent().myTurn = !getOpponent().myTurn;
-
     }
 }

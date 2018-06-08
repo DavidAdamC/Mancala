@@ -3,7 +3,6 @@ package nl.sogyo.mancala;
 public class Bowl extends Field {
     Player player1;
     Player player2;
-    //Player
     int qStones;
     private int dist;
     Bowl Opposite;
@@ -48,7 +47,6 @@ public class Bowl extends Field {
         for(int i = 1; i <= 13; i++) {
             myField.makeNeighbour(root);
             myField = myField.getNeighbour();
-            //System.out.println("From Bowl: MakeField: " + myField.getDist() + "  " + myField.getqStones() + " " + myField.getOwner().getName());
         }
         myField.setNeighbour(root);
         player1.setOpponent(myField.getOwner());
@@ -61,7 +59,7 @@ public class Bowl extends Field {
         int steps = 0;
         for (int i = 0; i < 6; i++) {
             myField = myField.getNeighbour();
-            if(myField.getClass().getName().equals("nl.sogyo.mancala.Kalaha")) {
+            if("nl.sogyo.mancala.Kalaha".equals(myField.getClass().getName())) {
                 steps = i; break;
             }
         }
@@ -78,7 +76,7 @@ public class Bowl extends Field {
         Kalaha myKalaha;
         for (int i = 0; i < 6; i++) {
             myField = myField.getNeighbour();
-            if(myField.getClass().getName().equals("nl.sogyo.mancala.Kalaha")) {
+			if("nl.sogyo.mancala.Kalaha".equals(myField.getClass().getName())) {
                 myKalaha = (Kalaha) myField;
                 return(myKalaha);
             }
@@ -89,13 +87,11 @@ public class Bowl extends Field {
     public void printBowlgetqStones() {
         Field myCopy = this;
         for(int i = 0; i < 14; i++) {
-            System.out.println("From Bowl: printBowlgetqStones: " + myCopy.getOwner().getName() + " " + myCopy.getDist() + " " + myCopy.getqStones());
             myCopy = myCopy.getNeighbour();
         }
     }
 
     public void passStones(int qpassStones) {
-        //System.out.println("Stones to pass: " + qpassStones);
         if(qpassStones == 1) {
             this.addstone();
 
@@ -103,7 +99,6 @@ public class Bowl extends Field {
                 if(this.getqStones() == 1) {
                     this.setqStones(0);
                     this.getMyKalaha().addstone();
-                    // sla steentjes aan de andere kant en doe ze in eigen kalaha
                     this.slaSteentjesvanOverliggendeVeld();
 
                 }
@@ -117,10 +112,8 @@ public class Bowl extends Field {
 
     public void choose(int bowlnr) {
         Bowl chosenBowl = this;
-
-
         if(chooseKalaha(bowlnr)) {
-            System.out.println("Je hebt een Kalaha gekozen. Kies a.j.b. een bowl."); return;
+            return;
         }
         if(bowlnr > 6) {
             chosenBowl = (Bowl)chosenBowl.getMyKalaha().getNeighbour();
@@ -139,13 +132,10 @@ public class Bowl extends Field {
             chosenBowl.getNeighbour().passStones(chosenBowl.getqStones());
             chosenBowl.setqStones(0);
             if(gameHasEnded()) {
-                System.out.println("Spel is klaar!");
                 ((Bowl)this.getMyKalaha().getNeighbour()).slaSteentjesVanTegenstander();
                 this.declareWinner();
             }
-        } else {
-            System.out.println("Je mag me niet kiezen; ik heb geen stenen.");
-        }
+        } 
     }
 
     private boolean chooseKalaha(int bowlNr) {
@@ -170,10 +160,8 @@ public class Bowl extends Field {
     private void slaSteentjesVanTegenstander() {
         /* als deze methode wordt aangeroepen, moet deze speler wel aan de beurt zijn,
         maar laten we het 'double dutch' dubbelchecken */
-
         if(this.getOwner().hasTurn()) {
             Bowl myCopy = (Bowl)this.getMyKalaha().getNeighbour();
-            System.out.println("Mijn afstand tot origin is: " + myCopy.getDist());
             for (int i = 0; i < 5; i++) {
                 myCopy.getMyKalaha().addStonesFromTaken(myCopy.getqStones());
                 myCopy.setqStones(0);
@@ -181,9 +169,7 @@ public class Bowl extends Field {
             }
             myCopy.getMyKalaha().addStonesFromTaken(myCopy.getqStones());
             myCopy.setqStones(0);
-        } else {
-            System.out.println("Ik doe niets!");
-        }
+        } 
     }
 
     public boolean gameHasEnded() {
@@ -209,15 +195,12 @@ public class Bowl extends Field {
         int player1Stones = this.getMyKalaha().getqStones();
         int player2Stones = ((Bowl)this.getMyKalaha().getNeighbour()).getMyKalaha().getqStones();
         if(player1Stones < player2Stones) {
-            System.out.println(player2.getName() + " heeft gewonnen!");
             player2.setResult(2);
             player1.setResult(0);
         } else if(player1Stones > player2Stones) {
-            System.out.println(player1.getName() + " heeft gewonnen!");
             player1.setResult(2);
             player2.setResult(0);
         } else {
-            System.out.println("Het spel is in een gelijkspel ge\u00EBindigd!");
             player1.setResult(1);
             player2.setResult(1);
         }
