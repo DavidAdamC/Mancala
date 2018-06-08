@@ -86,6 +86,4 @@ public abstract class Field {
         player2.setOpponent(this.getOwner());
         return(player2);
     }
-
-
 }
