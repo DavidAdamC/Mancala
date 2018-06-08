@@ -112,7 +112,6 @@ public class Bowl extends Field {
         } else if(qpassStones > 0) {
             this.addstone();
             this.getNeighbour().passStones(qpassStones - 1);
-            //System.out.println("From Bowl: passStones: " + getDist() + " " + getqStones());
         }
     }
 
@@ -183,7 +182,7 @@ public class Bowl extends Field {
             myCopy.getMyKalaha().addStonesFromTaken(myCopy.getqStones());
             myCopy.setqStones(0);
         } else {
-            System.out.println("Ha! Ik doe niets!");
+            System.out.println("Ik doe niets!");
         }
     }
 
