@@ -6,8 +6,7 @@ import org.junit.Test;
 public class MancalaTest {
 
     @Test
-    public void testApp()
-    {
+    public void testApp() {
         Assert.assertTrue(true);
     }
 
@@ -15,13 +14,13 @@ public class MancalaTest {
     public void TestFindsBuurman() {
         Bowl myBowl = new Bowl();
         myBowl.makeNeighbour(myBowl);
-        Assert.assertTrue(myBowl.getNeighbour().getDist() == myBowl.getDist()+1);
+        Assert.assertTrue(myBowl.getNeighbour().getDist() == myBowl.getDist() + 1);
     }
 
     @Test
     public void TestFindsOpposite() {
         Bowl myBowl = new Bowl(true);
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             myBowl = (Bowl) myBowl.getNeighbour();
         }
 
@@ -49,7 +48,7 @@ public class MancalaTest {
         Bowl myBowl = new Bowl(true);
 
         Field me = myBowl;
-        for(int i = 0; i < 14; i++) {
+        for (int i = 0; i < 14; i++) {
             me = me.getNeighbour();
         }
         Assert.assertTrue(myBowl == me);
@@ -76,10 +75,11 @@ public class MancalaTest {
         myBowl.choose(0);
         Assert.assertEquals(5, myBowl.getNeighbour().getqStones());
     }
+
     @Test
     public void ChosenBowlGivesToOwnKalaha() {
         Bowl myBowl = new Bowl(true);
-        for(int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++) {
             myBowl = (Bowl) myBowl.getNeighbour();
         }
         myBowl.choose(0);
@@ -88,9 +88,9 @@ public class MancalaTest {
 
     @Test
     public void BowlAfterKalahaDoesntGetStoneWhenNotNeededTo() {
-            Bowl myBowl = new Bowl(true);
-            myBowl.choose(0);      
-            Assert.assertEquals(4, myBowl.getMyKalaha().getNeighbour().getqStones());
+        Bowl myBowl = new Bowl(true);
+        myBowl.choose(0);
+        Assert.assertEquals(4, myBowl.getMyKalaha().getNeighbour().getqStones());
     }
 
 
@@ -98,7 +98,7 @@ public class MancalaTest {
     public void TestPassStonesEndInOwnNonEmptyBowl() {
         Bowl myBowl = new Bowl(true);
         Bowl myEnd = myBowl;
-        for(int i = 0; i < myBowl.getqStones(); i++) {
+        for (int i = 0; i < myBowl.getqStones(); i++) {
             myEnd = (Bowl) myEnd.getNeighbour();
         }
         myBowl.choose(0);
@@ -108,7 +108,7 @@ public class MancalaTest {
     @Test
     public void TestTurnHoldsWhenEndingInOwnKalaha() {
         Bowl myBowl = new Bowl(true);
-        for(int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++) {
             myBowl = (Bowl) myBowl.getNeighbour();
         }
         myBowl.choose(0);
@@ -122,7 +122,7 @@ public class MancalaTest {
         Field myOppBowl = myBowl;
 
         myBowl.makeField();
-        for(int i = 0; i < 7; i++) {
+        for (int i = 0; i < 7; i++) {
             myOppBowl = myOppBowl.getNeighbour();
         }
 
@@ -151,7 +151,7 @@ public class MancalaTest {
 
     @Test
     public void TestEenAantalZetten() {
-        int[] myIntScores = new int[]{0,5,5,5,0,5,8,0,0,5,5,5,5,0};
+        int[] myIntScores = new int[]{0, 5, 5, 5, 0, 5, 8, 0, 0, 5, 5, 5, 5, 0};
         Bowl myBowl = new Bowl(true);
         myBowl.choose(4);
         myBowl.printBowlgetqStones();
@@ -160,7 +160,7 @@ public class MancalaTest {
         myBowl.choose(0);
         myBowl.printBowlgetqStones();
         Field myRunner = myBowl;
-        for(int i = 0; i < 14; i++) {
+        for (int i = 0; i < 14; i++) {
             Assert.assertEquals(myIntScores[i], myRunner.getqStones());
             myRunner = myRunner.getNeighbour();
         }
@@ -168,8 +168,8 @@ public class MancalaTest {
 
     @Test
     public void TestGameHasEnded() {
-        int[] myIntScores = new int[]{0,0,0,0,0,0,24,0,0,0,0,0,0,24};
-        int[] myMoves = new int[]{2,4,8,7,0,11,2,10,2,12,4,11,2,9,0,11,1,9,3,11,10,4,2,8,1,7,4,8,3,9,11,10,0,12,3};
+        int[] myIntScores = new int[]{0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 24};
+        int[] myMoves = new int[]{2, 4, 8, 7, 0, 11, 2, 10, 2, 12, 4, 11, 2, 9, 0, 11, 1, 9, 3, 11, 10, 4, 2, 8, 1, 7, 4, 8, 3, 9, 11, 10, 0, 12, 3};
         Bowl myBowl = new Bowl(true);
         myBowl.playMoves(myMoves);
         myBowl.printBowlgetqStones();
@@ -178,32 +178,117 @@ public class MancalaTest {
 
     @Test
     public void TestAfterGameEndedStonesAreStolen() {
-        int[] myIntScores = new int[]{0,0,0,0,0,0,24,0,0,0,0,0,0,24};
-        int[] myMoves = new int[]{2,4,8,7,0,11,2,10,2,12,4,11,2,9,0,11,1,9,3,11,10,4,2,8,1,7,4,8,3,9,11,10,0,12,3};
+        int[] myIntScores = new int[]{0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 24};
+        int[] myMoves = new int[]{2, 4, 8, 7, 0, 11, 2, 10, 2, 12, 4, 11, 2, 9, 0, 11, 1, 9, 3, 11, 10, 4, 2, 8, 1, 7, 4, 8, 3, 9, 11, 10, 0, 12, 3};
         Bowl myBowl = new Bowl(true);
         myBowl.playMoves(myMoves);
         myBowl.printBowlgetqStones();
 
-        if(!myBowl.getOwner().hasTurn()) {
-            myBowl = (Bowl)myBowl.getMyKalaha().getNeighbour();
+        if (!myBowl.getOwner().hasTurn()) {
+            myBowl = (Bowl) myBowl.getMyKalaha().getNeighbour();
         }
         Field myRunner = myBowl;
-        for(int i = 0; i < 14; i++) {
+        for (int i = 0; i < 14; i++) {
             Assert.assertEquals(myIntScores[i], myRunner.getqStones());
             myRunner = myRunner.getNeighbour();
         }
     }
 
-
     @Test
-    public void TestEenPartij() {
-        int[] myIntScores = new int[]{0,0,0,0,0,0,24,0,0,0,0,0,0,24};
-        int[] myMoves = new int[]{2,4,8,7,0,11,2,10,2,12,4,11,2,9,0,11,1,9,3,11,10,4,2,8,1,7,4,8,3,9,11,10,0,12,3};
+    public void TestEenPaarZetten() {
+        int[] myIntScores = new int[]{4, 4, 0, 0, 6, 6, 2, 5, 5, 4, 4, 4, 4, 0};
+        int[] myMoves = new int[]{2, 3, 4}; // speler kiest niet een eigen bowl.
         Bowl myBowl = new Bowl(true);
         myBowl.playMoves(myMoves);
         myBowl.printBowlgetqStones();
         Field myRunner = myBowl;
-        for(int i = 0; i < 14; i++) {
+        for (int i = 0; i < 14; i++) {
+            Assert.assertEquals(myIntScores[i], myRunner.getqStones());
+            myRunner = myRunner.getNeighbour();
+        }
+    }
+
+    @Test
+    public void TestEenPartij() {
+        int[] myIntScores = new int[]{0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 24};
+        int[] myMoves = new int[]{2, 4, 8, 7, 0, 11, 2, 10, 2, 12, 4, 11, 2, 9, 0, 11, 1, 9, 3, 11, 10, 4, 2, 8, 1, 7, 4, 8, 3, 9, 11, 10, 0, 12, 3};
+        Bowl myBowl = new Bowl(true);
+        //myBowl.playMoves(myMoves);
+        myBowl.choose(2);
+        myBowl.choose(4);
+        myBowl.choose(8);
+        myBowl.choose(7);
+        myBowl.choose(0);
+        myBowl.choose(11);
+        myBowl.choose(2);
+        myBowl.choose(10);
+        myBowl.choose(2);
+        myBowl.choose(12);
+        myBowl.choose(4);
+        myBowl.choose(11);
+        myBowl.choose(2);
+        myBowl.choose(9);
+        myBowl.choose(0);
+        myBowl.choose(11);
+        myBowl.choose(1);
+        myBowl.choose(9);
+        myBowl.choose(3);
+        myBowl.choose(11);
+        myBowl.choose(10);
+        myBowl.choose(4);
+        myBowl.choose(2);
+        myBowl.choose(8);
+        myBowl.choose(1);
+        myBowl.choose(7);
+        myBowl.choose(4);
+        myBowl.choose(8);
+        myBowl.choose(3);
+        myBowl.choose(9);
+        myBowl.choose(11);
+        myBowl.choose(10);
+        myBowl.choose(0);
+        myBowl.choose(12);
+        myBowl.choose(3);
+
+
+
+        myBowl.printBowlgetqStones();
+        Field myRunner = myBowl;
+        for (int i = 0; i < 14; i++) {
+            Assert.assertEquals(myIntScores[i], myRunner.getqStones());
+            myRunner = myRunner.getNeighbour();
+        }
+    }
+
+    @Test
+    public void TestEenPartijMetOngeldigeZet() {
+        int[] myIntScores = new int[]{4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0};
+        int[] myMoves = new int[]{2, 4, 8, 7, 0, 11, 2, 10, 2, 12, 4, 11, 2, 9, 0, 11, 1, 9, 3, 11, 10, 4, 2, 8, 1, 7, 4, 8, 3, 9, 11, 10, 0, 12, 3};
+        Bowl myBowl = new Bowl(true);
+        //myBowl.playMoves(myMoves);
+        myBowl.choose(7);
+
+
+        myBowl.printBowlgetqStones();
+        Field myRunner = myBowl;
+        for (int i = 0; i < 14; i++) {
+            Assert.assertEquals(myIntScores[i], myRunner.getqStones());
+            myRunner = myRunner.getNeighbour();
+        }
+    }
+
+    @Test
+    public void TestEenPartijMetVetVeelOngeldigeZetten() {
+        int[] myIntScores = new int[]{0, 5, 5, 5, 5, 4, 0, 0, 5, 5, 5, 5, 4, 0};
+        int[] myMoves = new int[]{0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12};
+        Bowl myBowl = new Bowl(true);
+        myBowl.playMoves(myMoves);
+
+
+
+        myBowl.printBowlgetqStones();
+        Field myRunner = myBowl;
+        for (int i = 0; i < 14; i++) {
             Assert.assertEquals(myIntScores[i], myRunner.getqStones());
             myRunner = myRunner.getNeighbour();
         }
@@ -211,8 +296,8 @@ public class MancalaTest {
 
     @Test
     public void TestDeclareWinner() {
-        int[] myIntScores = new int[]{0,0,0,0,0,0,24,0,0,0,0,0,0,24};
-        int[] myMoves = new int[]{2,4,8,7,0,11,2,10,2,12,4,11,2,9,0,11,1,9,3,11,10,4,2,8,1,7,4,8,3,9,11,10,0,12,3};
+        int[] myIntScores = new int[]{0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 24};
+        int[] myMoves = new int[]{2, 4, 8, 7, 0, 11, 2, 10, 2, 12, 4, 11, 2, 9, 0, 11, 1, 9, 3, 11, 10, 4, 2, 8, 1, 7, 4, 8, 3, 9, 11, 10, 0, 12, 3};
         Bowl myBowl = new Bowl(true);
         myBowl.playMoves(myMoves);
         Assert.assertEquals(1, myBowl.getOwner().getResult());
@@ -220,17 +305,79 @@ public class MancalaTest {
 
     @Test
     public void TestEenAnderePartij() {
-        int[] myIntScores = new int[]{0,0,0,0,0,0,33,0,0,0,0,0,0,15};
-        int[] myMoves = new int[]{2,5,7,1,8,0,9,1,12,5,2,7,1,11,5,4,12};
+        int[] myIntScores = new int[]{0, 0, 0, 0, 0, 0, 33, 0, 0, 0, 0, 0, 0, 15};
+        int[] myMoves = new int[]{2, 5, 7, 1, 8, 0, 9, 1, 12, 5, 2, 7, 1, 11, 5, 4, 12};
         Bowl myBowl = new Bowl(true);
         myBowl.playMoves(myMoves);
         myBowl.printBowlgetqStones();
         Field myRunner = myBowl;
-        for(int i = 0; i < 14; i++) {
+        for (int i = 0; i < 14; i++) {
             Assert.assertEquals(myIntScores[i], myRunner.getqStones());
             myRunner = myRunner.getNeighbour();
         }
     }
 
+    @Test
+    public void TestMancalaFacadeWinnerState() {
+        MancalaFacade mancalaFacade = new MancalaFacade();
+        Assert.assertEquals("-1;-1", mancalaFacade.getWinnerState());
+    }
 
+    @Test
+    public void TestMancalaFacadeInitialBoardState() {
+        MancalaFacade mancalaFacade = new MancalaFacade();
+        int[] myIntScores = new int[]{4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0};
+        for(int i = 0; i < 14; i++) {
+            Assert.assertEquals(myIntScores[i], mancalaFacade.getBoardState()[i]);
+        }
+    }
+
+    @Test
+    public void TestMancalaFacadeAfterOneSpecificMove() {
+        MancalaFacade mancalaFacade = new MancalaFacade();
+        mancalaFacade.playMove(2);
+        int[] myIntScores = new int[]{4, 4, 0, 5, 5, 5, 1, 4, 4, 4, 4, 4, 4, 0};
+        for(int i = 0; i < 14; i++) {
+            Assert.assertEquals(myIntScores[i], mancalaFacade.getBoardState()[i]);
+        }
+    }
+
+    @Test
+    public void TestMancalaFacadeAfterOneSpecificWrongMove() {
+        MancalaFacade mancalaFacade = new MancalaFacade();
+        mancalaFacade.playMove(7);
+        int[] myIntScores = new int[]{4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0};
+        for(int i = 0; i < 14; i++) {
+            Assert.assertEquals(myIntScores[i], mancalaFacade.getBoardState()[i]);
+        }
+    }
+
+    @Test
+    public void TestFacadeReturnsPlayerTurn() {
+        MancalaFacade mancalaFacade = new MancalaFacade();
+        mancalaFacade.playMove(1);
+        Assert.assertEquals(1, mancalaFacade.getBoardState()[14]);
+    }
+
+     /*
+    @Test
+    public void TestMancalaFacadeAfterOneSpecificMove() {
+        MancalaFacade mancalaFacade = new MancalaFacade();
+        mancalaFacade.playMove(2);
+        int[] myIntScores = new int[]{4, 4, 0, 5, 5, 5, 1, 4, 4, 4, 4, 4, 4, 0};
+        for(int i = 0; i < 14; i++) {
+            Assert.assertEquals(myIntScores[i], mancalaFacade.getBoardState()[i]);
+        }
+    }
+
+
+
+
+    @Test
+    public void TestMancalaFacadeOpponentGetsTurn() {
+        MancalaFacade mancalaFacade = new MancalaFacade();
+        mancalaFacade.playMove(2);
+        Assert.assertEquals(mancalaFacade.playerWithTurn(), "Barney");
+    }
+    */
 }

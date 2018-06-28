@@ -111,6 +111,7 @@ public class Bowl extends Field {
     }
 
     public void choose(int bowlnr) {
+
         Bowl chosenBowl = this;
         if(chooseKalaha(bowlnr)) {
             return;
@@ -125,7 +126,8 @@ public class Bowl extends Field {
         }
 
         if(!eigenaarVanBowlHeeftBeurt(chosenBowl)) {
-            System.out.println("Dit is de bowl van je tegenstander. Kies a.j.b. een van je eigen bowls.");
+            //System.out.println("Dit is de bowl van je tegenstander. Kies a.j.b. een van je eigen bowls.");
+            return;
         }
 
         if(chosenBowl.getqStones() > 0) {
